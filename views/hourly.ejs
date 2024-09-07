@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hourly Forecast</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <main>
+    <div class="form1">
+        <h2>Hourly Forecast for <%= city %></h2><br>
+        <form action="/hourly" method="get">
+            <input type="text" name="city" placeholder="Enter city" value="<%= city %>">
+            <button type="submit">Get Hourly Forecast</button>
+        </form>
+        <p>If you want a more detailed Forecast...click</p><br>
+        <button style=" width: 40%; color:white;background:#007BFF;border:none;border-radius:5px;padding:6px;font-size: 16px;cursor: pointer;transition: background-color 0.3s ease;"><a href='/weekly'>7-day forecast</a></button>
+    </div>
+        <div class="forecast-container">
+            <h2>3 Hour Step Forecast</h2>
+            <div class="forecast"></div>
+        </div>
+
+        <canvas id="hourlyChart"></canvas>
+        
+    </main>
+    <%- include('partials/footer') %>
+
+    <script>
+        // Embed the hourly data into the script
+        const hourlyData = <%- JSON.stringify(hourlyData) %>; 
+
+        const ctx = document.getElementById('hourlyChart').getContext('2d');
+        const hourlyChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: hourlyData.list.map(item => item.dt_txt.split(' ')[1]), // Hourly times
+                datasets: [{
+                    label: 'Temperature (°C)',
+                    data: hourlyData.list.map(item => (item.main.temp - 273.15).toFixed(1)), // Temperature data
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Time (Hour)'
+                        },
+                        ticks: {
+                            autoSkip: true,
+                            maxTicksLimit: 24
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Temperature (°C)'
+                        },
+                        ticks: {
+                            callback: function(value) { return value + '°C'; }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Display hourly forecast with icons
+        const forecastContainer = document.querySelector('.forecast');
+        hourlyData.list.slice(0, 4).forEach(item => {
+            const time = new Date(item.dt_txt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const temp = Math.round(item.main.temp - 273.15) + '°C';
+            const icon = item.weather[0].icon; // Weather icon code
+
+            const forecastItem = document.createElement('div');
+            forecastItem.classList.add('forecast-item');
+            forecastItem.innerHTML = `
+                <div class="icon">
+                    <img src="http://openweathermap.org/img/wn/${icon}.png" alt="Weather Icon">
+                </div>
+                <div class="time">${time}</div>
+                <div class="temp">${temp}</div>
+            `;
+            forecastContainer.appendChild(forecastItem);
+        });
+    </script>
+</body>
+</html>

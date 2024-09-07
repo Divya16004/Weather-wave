@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agriculture Advice</title>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        /* Background image container */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/agriculture2.jpg') no-repeat center center/cover;
+            /* filter: blur(8px); */
+            z-index: -1; /* Make sure it stays behind the content */
+        }
+
+        /* White box for the content */
+        .advice-section {
+            position: relative;
+            z-index: 1;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 100px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #764776;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background image with blur -->
+    <div class="background-container"></div>
+
+    <%- include('partials/header') %>
+    
+
+    <!-- Location Input Form -->
+    <section class="advice-section">
+        <h1>Agriculture Advice</h1>
+        <form id="advice-form">
+            <input type="text" id="advice-city" placeholder="Enter a location" required>
+            <input type="submit" value="Get Advice">
+        </form>
+        <div id="advice-content">
+            <p>Enter a location to get weather-based agriculture advice.</p>
+        </div>
+    </section>
+
+    <%- include('partials/footer') %>
+    <script src="/scripts/advice.js"></script>
+</body>
+</html>

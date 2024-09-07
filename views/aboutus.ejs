@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - WeatherWave</title>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: aqua;
+            z-index: -1;
+        }
+
+        .about-container {
+            position: relative;
+            z-index: 1;
+            background-color: white;
+            padding: 40px;
+            margin: 100px auto;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        .team-section, .mission-section, .contact-section {
+            margin-bottom: 30px;
+        }
+
+        .team-member {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .team-member img {
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            margin-right: 20px;
+        }
+
+        .contact-info {
+            text-align: center;
+        }
+
+        .contact-info p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    
+    <%- include('partials/header') %>
+    <% - include('partials/navbar') %>
+
+    
+
+    <div class="about-container">
+        <h1>About Us</h1>
+
+        <section class="mission-section">
+            <h2>Our Mission</h2>
+            <p>At WeatherWave, our mission is to provide accurate and timely weather forecasts to help you make informed decisions. Whether you're planning a day out or need to manage agricultural activities, our team is dedicated to delivering reliable weather information tailored to your needs.</p>
+        </section>
+
+
+        <section class="contact-section">
+            <h2>Contact Us</h2>
+            <div class="contact-info">
+                <p>Email: support@weatherwave.com</p>
+                <p>Phone: +1 (123) 456-7890</p>
+                <p>Address: 123 Weather St, Forecast City, WX 12345</p>
+            </div>
+        </section>
+    </div>
+    
+    <%- include('partials/footer') %>
+</body>
+</html>

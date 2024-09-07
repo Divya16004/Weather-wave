@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Forecast</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <main>
+        <div class="form1">
+        <h2>Weekly Forecast for <%= city %></h2>
+        <form action="/weekly" method="get">
+            <input type="text" name="city" placeholder="Enter city" value="<%= city %>">
+            <button type="submit">Get Weekly Forecast</button>
+        </form></div>
+        <div class="forecast-container">
+            <h2>7-Day Forecast</h2>
+            <div class="forecast"></div>
+        </div>
+        <canvas id="weeklyChart"></canvas>
+    </main>
+    <%- include('partials/footer') %>
+
+    <script>
+        // Embed the weekly data into the script
+        const weeklyData = <%- JSON.stringify(weeklyData) %>; 
+
+        // Chart.js for weekly temperature trend
+        const ctx = document.getElementById('weeklyChart').getContext('2d');
+        const weeklyChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: weeklyData.list.map(item => item.dt_txt.split(' ')[0]), // Dates
+                datasets: [{
+                    label: 'Temperature (°C)',
+                    data: weeklyData.list.map(item => (item.main.temp - 273.15).toFixed(1)), // Temperature data
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        },
+                        ticks: {
+                            autoSkip: true,
+                            maxTicksLimit: 7
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Temperature (°C)'
+                        },
+                        ticks: {
+                            callback: function(value) { return value + '°C'; }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Process and display the daily forecast
+        const forecastContainer = document.querySelector('.forecast');
+
+        // Function to get the start of the day for each forecast
+        function getStartOfDay(date) {
+            return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        }
+
+        // Group data by date
+        const dailyData = {};
+        weeklyData.list.forEach(item => {
+            const date = new Date(item.dt_txt);
+            const startOfDay = getStartOfDay(date).toISOString();
+            if (!dailyData[startOfDay]) {
+                dailyData[startOfDay] = [];
+            }
+            dailyData[startOfDay].push(item);
+        });
+
+        // Sort dates
+        const sortedDates = Object.keys(dailyData).sort();
+
+        sortedDates.forEach(dateKey => {
+            const dayData = dailyData[dateKey];
+            const date = new Date(dateKey);
+            const dayOfWeek = date.toLocaleDateString('en-GB', { weekday: 'long' });
+
+            // Get the average temperature and weather icon for the day
+            const avgTemp = dayData.reduce((sum, item) => sum + (item.main.temp - 273.15), 0) / dayData.length;
+            const weatherIcon = dayData[0].weather[0].icon; // Assuming the weather icon is the same for the day
+
+            // Create forecast item
+            const forecastItem = document.createElement('div');
+            forecastItem.classList.add('forecast-item');
+            forecastItem.innerHTML = `
+                <div class="icon">
+                    <img src="http://openweathermap.org/img/wn/${weatherIcon}.png" alt="Weather Icon">
+                </div>
+                <div class="time">${dayOfWeek}</div>
+                <div class="temp">${Math.round(avgTemp)}°C</div>
+            `;
+            forecastContainer.appendChild(forecastItem);
+        });
+    </script>
+</body>
+</html>
+

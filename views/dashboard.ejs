@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - WeatherWave</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dashboard-container {
+            max-width: 800px;
+            width: 100%;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #map {
+            height: 500px;
+            margin-bottom: 20px;
+        }
+
+        #save-location {
+            background-color: #764776;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #alerts {
+            margin-top: 20px;
+            font-size: 1rem;
+        }
+
+        #loading-spinner {
+            font-size: 1.2rem;
+            color: #764776;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="dashboard-container">
+        <h2>Welcome, <%= session && session.username ? session.username : 'Guest' %></h2>
+        <div id="map"></div>
+        <button id="save-location">Save Location</button>
+        <div id="alerts"></div>
+        <div id="loading-spinner">Loading...</div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map
+        const map = L.map('map').setView([51.505, -0.09], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        let marker;
+
+        // Event listener for map clicks to place a marker
+        map.on('click', function(e) {
+            if (marker) {
+                map.removeLayer(marker);
+            }
+            marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+        });
+
+        document.getElementById('save-location').addEventListener('click', async function() {
+    if (!marker) return alert('Please select a location on the map.');
+
+    // Get the latitude and longitude from the marker
+    const lat = marker.getLatLng().lat;
+    const lon = marker.getLatLng().lng;
+
+    const loadingSpinner = document.getElementById('loading-spinner');
+    const alertsDiv = document.getElementById('alerts');
+
+    loadingSpinner.style.display = 'block';
+    alertsDiv.innerHTML = '';  // Clear any previous alerts
+
+    try {
+        const response = await fetch(`/weather?lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}`);
+
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        let alertsContent = 'No alerts for this location.';
+        if (data.alerts && data.alerts.length > 0) {
+            alertsContent = data.alerts.map(alert => `<p>${alert.event}: ${alert.description}</p>`).join('');
+        }
+
+        alertsDiv.innerHTML = alertsContent;
+    } catch (error) {
+        console.error('Error fetching weather data:', error.message);
+        alertsDiv.innerHTML = 'There was an error fetching weather data. Please try again later.';
+    } finally {
+        loadingSpinner.style.display = 'none';
+    }
+});
+
+        </script>
+</body>
+</html>
