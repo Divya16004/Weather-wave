@@ -1,0 +1,519 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+    background-color: #333;
+    position: relative;
+
+}
+
+.navbar .logo {
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.navbar .logo img {
+    height: 40px;
+    margin-right: 10px;
+   
+}
+.navbar nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar nav ul li {
+    position: relative;
+}
+
+.navbar nav ul li a {
+    color: white;
+    font-weight: bold;
+    padding: 8px 12px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar nav ul li a:hover {
+    background-color: yellow;
+    border-radius: 8px;
+    color: black;
+}
+ 
+
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    right: 0;
+    min-width: 200px;
+    border-radius: 5px;
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #555;
+    border-radius: 5px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    margin-top: 5px;
+}
+
+
+.slideshow {
+    position: relative;
+    margin: 50px auto;
+    width: 90%;
+    max-width: 1200px;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+.carousel {
+    display: flex;
+   
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+} 
+.slide {
+    min-width: 100%;
+    transition: transform 0.5s ease-in-out;
+    position: relative;
+   
+}
+.slide img {
+    width: 100%;
+    border-radius: 15px;
+}
+
+/* .text {
+    position: absolute;
+    bottom: 15px;
+    left: 20px;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+.content-box {
+    padding: 50px 20px;
+    text-align: center;
+} */
+.weather-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to bottom, #1e3c72, #2a5298);
+}
+
+.weather-section {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    color: white;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+
+
+.date-time {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.weather-info h2 {
+    font-size: 2rem;
+    margin: 1rem 0;
+}
+
+.weather-condition {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.temp-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    
+}
+
+.weather-icon {
+    width: 70px;
+    height: 70px;
+    margin-right: 10px;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+    max-width: 400px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-form input[type="text"] {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    outline: none;
+    background-color: #fff;
+}
+
+.search-form input[type="text"]::placeholder {
+    color: #888;
+}
+
+.search-form button {
+    background-color: #007BFF;
+    border: none;
+    color: #fff;
+    padding: 10px 15px;
+    margin-left: 10px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-form button:hover {
+    background-color: #0056b3;
+}
+
+.search-form i {
+    font-size: 20px;
+}
+
+
+.temp-icon{
+    width:40px;
+    height:40px;
+    margin-right: 10px;
+}
+
+.temperature {
+    font-size: 3rem;
+}
+
+.extra-info p {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+}
+
+.extra-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+
+
+.detailed-forecast button{
+    background-color: white;
+    border: none;
+    color: black;
+    padding: 10px 15px;
+    margin-left: 10px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.detailed-forecast button:hover {
+    background-color: #aab300;
+}
+
+
+.error-page{
+    margin:100px;
+    justify-content:center;
+    text-align: center;
+}
+
+.error-page button[type="submit"]{
+    background-color: #007BFF;
+    border: none;
+    color: #fff;
+    padding: 10px 15px;
+    margin-left: 10px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.error-page button:hover {
+    background-color: #0056b3;
+}
+
+.form1 {
+    max-width: 400px;               /* Maximum width of the form */
+    margin: 0 auto;                 /* Center the form */
+    padding: 20px;                  /* Padding inside the form */
+    background-color: #f9f9f9;      /* Light background color */
+    border-radius: 10px;            /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center;             /* Center text */
+    margin-bottom:40px;
+    margin-top:40px;
+}
+
+.form1 h2 {
+    margin-bottom: 20px;            /* Space below the heading */
+    font-size: 24px;                /* Larger font size for the heading */
+}
+
+.form1 input[type="text"] {
+    width: 100%;                    /* Full width input */
+    padding: 10px;                  /* Padding inside the input */
+    margin-bottom: 10px;            /* Space below the input */
+    border: 1px solid #ccc;         /* Light border */
+    border-radius: 5px;             /* Rounded corners */
+    font-size: 16px;                /* Font size */
+    box-sizing: border-box;         /* Ensure padding is included in width */
+}
+
+.form1 button[type="submit"] {
+    width: 100%;                    /* Full width button */
+    padding: 10px;                  /* Padding inside the button */
+    background-color: #007BFF;      /* Blue background */
+    color: white;                   /* White text */
+    border: none;                   /* No border */
+    border-radius: 5px;             /* Rounded corners */
+    font-size: 16px;                /* Font size */
+    cursor: pointer;                /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.form1 button[type="submit"]:hover {
+    background-color: #0056b3;      /* Darker blue on hover */
+}
+
+
+.forecast-container {
+    background-color: rgb(135, 135, 247);
+    margin-bottom:80px;
+    padding: 20px;
+    height:250px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.forecast-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ccc;
+}
+
+.forecast {
+    display: flex;
+    justify-content: space-between;
+}
+
+.forecast-item {
+    text-align: center;
+    color:white;
+}
+
+.forecast-item .time {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: whitesmoke;
+}
+
+.forecast-item .temp {
+    font-size: 24px;
+}
+
+
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+footer .container {
+    max-width: 1200px;
+    margin: 0 auto;
+} 
+
+/* advice.css */
+.advice-box {
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.advice-box h2, .advice-box h3 {
+    color: #333;
+}
+
+.advice-box p {
+    color: #666;
+    line-height: 1.6;
+}
+/* Advice Section */
+.advice-section {
+    max-width: 800px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.advice-section h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+/* Form Styling */
+#advice-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+#advice-form input[type="text"] {
+    width: 80%;
+    padding: 12px;
+    font-size: 18px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+#advice-form input[type="submit"] {
+    width: 50%;
+    padding: 12px;
+    font-size: 18px;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#advice-form input[type="submit"]:hover {
+    background-color: #45a049;
+}
+/* Advice Content Styling */
+#advice-content {
+    margin-top: 30px;
+    font-size: 18px;
+    color: #333;
+}
+
+#advice-content h3 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+#advice-content p {
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+
+
+@media (max-width: 768px) {
+    header {
+        padding: 10px;
+    }
+
+    nav ul {
+        text-align: center;
+        padding: 0;
+    }
+
+    nav ul li {
+        display: block;
+        margin: 10px 0;
+    }
+
+    form {
+        margin: 20px;
+    }
+}
